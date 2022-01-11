@@ -15,3 +15,5 @@ Reverts the window to the original style. Falls back to the style the applicatio
 Created/Used on Windows 10.  
 Windows 11 has not been tested.  
 Will not function on any other operating system.
+
+![image](https://user-images.githubusercontent.com/38366720/149036396-e7a4cc81-6004-4a3f-b5a1-d10007f587f7.png)
