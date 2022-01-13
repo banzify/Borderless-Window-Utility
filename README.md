@@ -17,3 +17,14 @@ Windows 11 has not been tested.
 Will not function on any other operating system.
 
 ![image](https://user-images.githubusercontent.com/38366720/149036396-e7a4cc81-6004-4a3f-b5a1-d10007f587f7.png)
+
+
+The real reason I made this: 
+When games dont support the super ultrawide resolution and you have them fullscreen they fill in the unused space with black bars.
+![image](https://user-images.githubusercontent.com/38366720/149245669-3457cb9e-6ec4-4fc9-a7ea-743400105b0a.png)
+
+Putting the game a windowed state adds a titlebar which causes bottom of the window to be below the screen space. Some games don't allow you to resize these windows and you're forced to either have a piece of the window cut from the bottom or play at a lower resolution that fits within your vertical screen space.
+![image](https://user-images.githubusercontent.com/38366720/149245709-f087ae6a-7ade-46b5-8c9c-899cb1d0f367.png)
+
+I use the tool force a borderless windowed state that floats in the center of the screen (or wherever I want it to be)  for a cleaner look and the upside of not losing any of the game window below the monitor space.
+![image](https://user-images.githubusercontent.com/38366720/149245765-e801bf91-091e-4f55-b271-0661e1b55fb9.png)
