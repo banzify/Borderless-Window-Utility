@@ -19,7 +19,8 @@ Will not function on any other operating system.
 ![image](https://user-images.githubusercontent.com/38366720/149036396-e7a4cc81-6004-4a3f-b5a1-d10007f587f7.png)
 
 
-The real reason I made this: 
+The real reason I made this:  
+  
 When games dont support the super ultrawide resolution and you have them fullscreen they fill in the unused space with black bars.
 ![image](https://user-images.githubusercontent.com/38366720/149245669-3457cb9e-6ec4-4fc9-a7ea-743400105b0a.png)
 
