@@ -29,3 +29,18 @@ Putting the game a windowed state adds a titlebar which causes bottom of the win
 
 I use the tool force a borderless windowed state that floats in the center of the screen (or wherever I want it to be)  for a cleaner look and the upside of not losing any of the game window below the monitor space.
 ![image](https://user-images.githubusercontent.com/38366720/149245765-e801bf91-091e-4f55-b271-0661e1b55fb9.png)
+
+# Profiles
+
+Create `profiles.ini` file like this:
+
+```
+[Stationeers]
+x=420
+y=0
+width=2560
+height=1440
+
+```
+
+If the window title contains 'Stationeers' these values will be used as the default values.
