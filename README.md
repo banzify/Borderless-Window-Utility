@@ -10,6 +10,8 @@ Checkout the code
 
 Create a virtual environment by running `python -m venv .venv`.
 
+Activate environment with `.venv/Scripts/activate`.
+
 Update the requirements by running `pip install -r requirements.txt`.
 
 Run `python main.py`.
