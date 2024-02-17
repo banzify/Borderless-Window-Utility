@@ -1,19 +1,30 @@
-import win32gui
+import configparser
 import ctypes
+import sys
+import os
+from pathlib import Path
+import PySimpleGUI as sg
+import win32gui
 import win32con
 import win32api
-import PySimpleGUI as sg
-import configparser
 
 user32 = ctypes.windll.user32
 PROFILE_FILE = 'profiles.ini'
+
+
+def profile_file_path():
+    script_path = Path(sys.argv[0])
+    if script_path is not None:
+        return str(os.path.join(script_path.parent, PROFILE_FILE))
+    else:
+        return PROFILE_FILE
 
 
 def read_profiles():
     profiles = []
 
     config = configparser.ConfigParser()
-    config.read(PROFILE_FILE)
+    config.read(profile_file_path())
 
     for section in config.sections():
         print(f"Found profile: {section}")
@@ -39,6 +50,25 @@ def load_profile(profiles, title):
     return None
 
 
+def save_window_profile(title, x, y, hres, vres):
+    profile_path = profile_file_path()
+
+    config = configparser.ConfigParser()
+    config.read(profile_path)
+
+    output_config = Path(profile_path)
+    output_config.parent.mkdir(exist_ok=True, parents=True)
+    with output_config.open("w") as output_file:
+        config.remove_section(title)
+        config.add_section(title)
+        config[title]['x'] = x
+        config[title]['y'] = y
+        config[title]['width'] = hres
+        config[title]['height'] = vres
+
+        config.write(output_file)
+
+
 def windowsizeupdate(hwnd):
     windowrect = win32gui.GetWindowRect(hwnd)
     windowrect = win32gui.GetWindowRect(hwnd)
@@ -46,18 +76,18 @@ def windowsizeupdate(hwnd):
     profiles = read_profiles()
     profile = load_profile(profiles, title)
     if profile is not None:
-        window.Element('X').update(profile['x'])
-        window.Element('Y').update(profile['y'])
-        window.Element('HRes').update(profile['width'])
-        window.Element('VRes').update(profile['height'])
+        window['X'].update(profile['x'])
+        window['Y'].update(profile['y'])
+        window['HRes'].update(profile['width'])
+        window['VRes'].update(profile['height'])
     else:
-        window.Element('X').update(int(windowrect[0]))
-        window.Element('Y').update(int(windowrect[1]))
-        window.Element('HRes').update(int(windowrect[2] - windowrect[0]))
-        window.Element('VRes').update(int(windowrect[3] - windowrect[1]))
+        window['X'].update(int(windowrect[0]))
+        window['Y'].update(int(windowrect[1]))
+        window['HRes'].update(int(windowrect[2] - windowrect[0]))
+        window['VRes'].update(int(windowrect[3] - windowrect[1]))
 
 
-def winEnumHandler(hwnd, ctx):
+def winEnumHandler(hwnd, _):
     if win32gui.IsWindowVisible(hwnd):
         n = win32gui.GetWindowText(hwnd)
         s = win32api.GetWindowLong(hwnd, win32con.GWL_STYLE)
@@ -80,7 +110,7 @@ layout = [[sg.Text('Window Selection: ')],
           [sg.Text("H Res:"), sg.InputText("2560", size=(7, 7), key='HRes'), sg.Text(
               "V Res:"), sg.InputText("1440", size=(7, 7), key='VRes')],
           [sg.Button('Borderless Window'), sg.Button('Revert Changes'), sg.Button(
-              'Resize/Position', key="Resize"), sg.Exit(key='Cancel')]
+              'Resize/Position', key="Resize"), sg.Button('Save Window Profile'), sg.Exit(key='Cancel')]
           ]
 
 
@@ -159,6 +189,9 @@ while True:
         allvisiblewindows = {}
         win32gui.EnumWindows(winEnumHandler, None)
         window.Element('combo').update(values=list(allvisiblewindows.keys()))
+
+    if event == 'Save Window Profile':
+        save_window_profile(values['combo'], values['X'], values['Y'], values['HRes'], values['VRes'])
 
     if event == 'combo':
         hwnd = allvisiblewindows.get(values['combo'], {}).get('hwnd')
